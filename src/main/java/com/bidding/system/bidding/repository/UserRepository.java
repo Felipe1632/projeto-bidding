@@ -22,7 +22,7 @@ public class UserRepository {
       try{
          Connection conn = Conexao.conectar();
          PreparedStatement stmt = null;
-         stmt = conn.prepareStatement("insert into usuarios values(id, nome, email, senha, role");
+         stmt = conn.prepareStatement("insert into usuarios (nome, email, senha, role) values (?,?,?,?)");
          
          stmt.setString(1, user.getNome());
          stmt.setString(2, user.getEmail());
@@ -31,7 +31,7 @@ public class UserRepository {
          
          int linhasAfetadas = stmt.executeUpdate();
          if(linhasAfetadas == 0){
-             throw new SQLException("Falha na atualização - Nenhuma linha foi ");
+             throw new SQLException("Falha na atualização - Nenhuma linha foi alterada.");
          }
       }catch(SQLException e){
           e.printStackTrace();

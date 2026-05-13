@@ -23,7 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
  */
 @Service
 public class TokenService {
-    @Value("$(api.security.token.secret)")
+    @Value("${api.security.token.secret}")
     private String secret;
     
     public SecretKey getKeySign() {
@@ -33,7 +33,7 @@ public class TokenService {
     
     public String gerarToken(UserDTO user) {
        if(
-           (user.getId() == 0 || user.getId() == null)  ||
+           (user.getId() == null || user.getId() == 0L)  ||
             user.getNome().equals("") ||
             user.getEmail().equals("") ||
             user.getRole().equals("")
