@@ -4,6 +4,7 @@
  */
 package com.bidding.system.bidding.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -12,15 +13,15 @@ import java.sql.Timestamp;
  */
 public class LanceDTO {
     private Long id;
-    private Float valor;
-    private Timestamp data_lance;
+    private Double valor;
+    private Date data_lance;
     private Long id_edital;
     private Long id_usuario;
 
     public LanceDTO() {
     }
 
-    public LanceDTO(Long id, Float valor, Timestamp data_lance, Long id_edital, Long id_usuario) {
+    public LanceDTO(Long id, Double valor, Date data_lance, Long id_edital, Long id_usuario) {
         this.id = id;
         this.valor = valor;
         this.data_lance = data_lance;
@@ -36,19 +37,19 @@ public class LanceDTO {
         this.id = id;
     }
 
-    public Float getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(Float valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
-    public Timestamp getData_lance() {
+    public Date getData_lance() {
         return data_lance;
     }
 
-    public void setData_lance(Timestamp data_lance) {
+    public void setData_lance(Date data_lance) {
         this.data_lance = data_lance;
     }
 
@@ -67,6 +68,5 @@ public class LanceDTO {
     public void setId_usuario(Long id_usuario) {
         this.id_usuario = id_usuario;
     }
-    
-    
+
 }

@@ -67,23 +67,26 @@ public class EditalRepository {
             }            
             return lista;
       }
-        
-        public int RegistroLance(LanceDTO novoLance){
+        public EditalDTO getById(Long id){
+            EditalDTO edital = new EditalDTO();
             try {
-            Connection conn = Conexao.conectar();
-            PreparedStatement stmt = null;
-            stmt = conn.prepareStatement("INSERT INTO lances (valor, data_lance, id_edital, id_usuario) values (?, ?, ?, ?)");
-            
-            stmt.setFloat(1, novoLance.getValor());
-            stmt.setTimestamp(2, novoLance.getData_lance());
-            stmt.setLong(3, novoLance.getId_edital());
-            stmt.setLong(4, novoLance.getId_usuario());
-           
-            return stmt.executeUpdate();
-            
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return 0;
-    }         
+                Connection conn = Conexao.conectar();
+                PreparedStatement stmt = null;
+                ResultSet rs = null;
+                
+                stmt = conn.prepareStatement("SELECT data_fechamento, status FROM editais WHERE id = ?");
+                stmt.setLong(1, id);
+                rs = stmt.executeQuery();
+                if(rs.next()) {                  
+                    edital.setId(rs.getLong("id"));
+                    edital.setTitulo(rs.getString("titulo"));
+                    edital.setDescricao(rs.getString("descricao"));
+                    edital.setData_fechamento(rs.getDate("data_fechamento"));
+                    edital.setStatus(rs.getString("status"));
+                }
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        return edital;
+        }           
 }

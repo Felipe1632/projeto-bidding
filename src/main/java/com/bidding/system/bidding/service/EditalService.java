@@ -25,6 +25,9 @@ public class EditalService {
     private EditalRepository repository;
     
     @Autowired
+    private LanceService lanceService;
+    
+    @Autowired
     private TokenService tokenService;
     
     public void criarEdital(EditalDTO novo, String token){
@@ -58,41 +61,12 @@ public class EditalService {
         }
     }
     
-        public List<EditalDTO> listarEditais() {
-        return repository.listarEditais();
+        public List<EditalDTO> listarEditais(String token) {
+            if(tokenService.validarToken(token)){
+                return repository.listarEditais();
+            } else {
+                throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Necessário logar com conta válida!");
+            }
     }
         
-        public void RegistroLance(LanceDTO novoLance, String token){
-        
-        UserDTO usuarioLogado = tokenService.extrairClaim(token);
-        
-        if(usuarioLogado.getRole().trim().equalsIgnoreCase("ENCERRADO")){
-            
-            String mensagem = "";
-            if(novoLance.getValor().equals("")){
-                mensagem += "Valor não preenchido!\n";
-            }
-            if(novoLance.getData_lance() == null){
-                mensagem += "Data não preenchida!\n";
-            }
-            if(novoLance.getId_edital().equals("")){
-                mensagem += "ID do Edital não preenchido!\n";
-            }
-            if(novoLance.getId_usuario().equals("")){
-                mensagem += "ID do Usuario não preenchido!\n";
-            }
-            
-            if(!mensagem.equals("")){
-            throw new ResponseStatusException(HttpStatusCode.valueOf(400), mensagem);
-
-           }
-            int linhas = repository.RegistroLance(novoLance);
-
-            if(linhas == 0){
-                throw new ResponseStatusException(HttpStatusCode.valueOf(500), "Erro ao cadastrar no banco de dados");               
-            }
-        }else{
-            throw new ResponseStatusException(HttpStatusCode.valueOf(403), "Acesso não autorizado!");           
-        }
-    }
 }
