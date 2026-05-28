@@ -21,16 +21,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EditalRepository {
     
-    public int criar(EditalDTO novo){
+    public int criar(EditalDTO edital){
         try {
             Connection conn = Conexao.conectar();
             PreparedStatement stmt = null;
             stmt = conn.prepareStatement("INSERT INTO editais (titulo, descricao, data_fechamento, status) values (?, ?, ?, ?)");
             
-            stmt.setString(1, novo.getTitulo());
-            stmt.setString(2, novo.getDescricao());
-            stmt.setDate(3, novo.getData_fechamento());
-            stmt.setString(4, novo.getStatus());
+            stmt.setString(1, edital.getTitulo());
+            stmt.setString(2, edital.getDescricao());
+            stmt.setDate(3, edital.getData_fechamento());
+            stmt.setString(4, edital.getStatus());
            
             return stmt.executeUpdate();
             

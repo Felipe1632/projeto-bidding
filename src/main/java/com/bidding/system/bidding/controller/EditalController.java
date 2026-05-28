@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Aluno
  */
 @RestController
-@RequestMapping("/api/editais")
+@RequestMapping("/editais")
 public class EditalController {
     
     @Autowired
@@ -41,7 +41,7 @@ public class EditalController {
     @Autowired 
     private EditalRepository editalRepository;
     
-    @PostMapping
+    @PostMapping("/editais/criar")
     public String cadastroEdital(
     @RequestHeader("Authorization") String auth,
     @RequestBody EditalDTO edital){
